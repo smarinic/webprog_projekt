@@ -43,15 +43,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['first_name'] = $firstName;
         $_SESSION['user_id'] = $id;
         $_SESSION['user_role'] = $role;
-        $_SESSION['redirect_message'] = 'Uspješna prijava! Dobrodošao/la u aplikaciju ' . $firstName;
+        $_SESSION['redirect_message'] = 'Uspješna prijava! Dobrodošli u aplikaciju, ' . $firstName;
         redirectPage('index.php');
-      } else {
-        // Neispravna lozinka
-        echo ('Neuspješna prijava!'); // TODO: mozda preusmjerit ponovo na login sa porukom da prijava nije uspjela?
       }
-    } else {
-      // Email ne postoji u bazi
-      echo ('Neuspješna prijava!'); // TODO: mozda preusmjerit ponovo na login sa porukom da prijava nije uspjela?
+      else {
+        $_SESSION['redirect_message'] = "Neuspješna prijava! Pokušajte ponovo.";
+        redirectPage('login.php');
+      }
+    }
+    else {
+      $_SESSION['redirect_message'] = "Neuspješna prijava! Pokušajte ponovo.";
+      redirectPage('login.php');
     }
   
     // Zatvori konekciju
@@ -60,6 +62,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 }
 else {
+  $failMessage = '';
+  if(isset($_SESSION['redirect_message']) && $_SESSION['redirect_message'] != '') {
+    $failMessage = '<div class="alert alert-danger" role="alert">' . $_SESSION['redirect_message'] . '</div>';
+  }
+  
   echo ('
   <body class="d-flex flex-column h-100">
   <main class="flex-shrink-0">
@@ -80,7 +87,7 @@ else {
                 <input type="password" id="password_input" name="password" class="form-control form-control-lg" required />
                 <label class="form-label" for="password">Lozinka</label>
               </div>
-
+              ' . $failMessage . '
               <input type="submit" class="btn btn-primary btn-lg btn-block" value="Prijava">
 
             </form>
