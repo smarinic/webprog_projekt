@@ -17,14 +17,14 @@ require_once('components/navbar.component.php');
 ?>
 
 <body class="d-flex flex-column h-100">
-<main class="flex-shrink-0">
-  <div class="container py-5 h-100">
-    <!-- PAGE CONTENT  -->
+  <main class="flex-shrink-0">
+    <div class="container py-5 h-100">
+      <!-- PAGE CONTENT  -->
 
 
-    <!-- END PAGE CONTENT  -->
-  </div>
-</main>
+      <!-- END PAGE CONTENT  -->
+    </div>
+  </main>
 </body>
 
 <?php
