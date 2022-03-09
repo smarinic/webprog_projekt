@@ -13,7 +13,6 @@ if ($_SESSION['is_auth'] == true) {
 include('components/head.component.php');
 include('components/navbar.component.php');
 
-require_once('php/dbconnection.php');
 ?>
 <body class="d-flex flex-column h-100">
   <main class="flex-shrink-0">

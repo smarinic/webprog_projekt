@@ -6,10 +6,7 @@ require_once('php/functions.php');
 
 // Provjeri pristup: (Admin = 1, Editor = 2, User = 3, Neregistrirani >3)
 $requiredAccessLevel = 4;
-checkAccess($user, $requiredAccessLevel);
-
-// SQL konekcija
-require_once('php/dbconnection.php');
+checkAccess($requiredAccessLevel);
 
 // HTML komponente - head i navbar
 require_once('components/head.component.php');
