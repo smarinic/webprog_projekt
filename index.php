@@ -5,12 +5,6 @@
 require_once('php/session.php');
 require_once('php/functions.php');
 
-// Provjeri pristup: (Admin = 1, Editor = 2, User = 3, Neregistrirani >3)
-$requiredAccessLevel = 4;
-checkAccess($requiredAccessLevel);
-
-
-
 // HTML komponente - head i navbar
 require_once('components/head.component.php');
 require_once('components/navbar.component.php');

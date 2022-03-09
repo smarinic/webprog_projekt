@@ -14,14 +14,23 @@ function redirectPage($url) {
 // Provjera razine pristupa
 function checkAccess($roleId) {
   if($roleId < 4 && $_SESSION['is_auth'] == false) {
-    redirectPage('index.php');
-
-  // Ako je korisnik preniske razine pristupa, preusmjeri ga na pocetnu
-    if($_SESSION['role'] >= $roleId) {
-      redirectPage('index.php');
-    }
+    return false;
   }
-  
+  // Ako je korisnik preniske razine pristupa, preusmjeri ga na pocetnu
+  if($_SESSION['user_role'] <= $roleId) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
+function checkIfActivePage($pageName) {
+  $activePage = basename($_SERVER['PHP_SELF'], ".php");
+  if($activePage == $pageName) {
+    return 'active';
+  }
+  else return false;
 }
 
 ?>

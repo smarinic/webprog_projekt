@@ -16,23 +16,22 @@ if(!isset($is_auth))
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="index.php">Početna</a>
+            <a class="nav-link <?php echo(checkIfActivePage("index")) ?>" aria-current="page" href="index.php">Početna</a>
           </li>
           <?php
           // Ako je korisnik prijavljen, prikazi link na recenzije
-          if($_SESSION['is_auth']) {
+          if(checkAccess(3)) {
             echo('
             <li class="nav-item">
-              <a class="nav-link" href="reviews.php">Recenzije</a>
+              <a class="nav-link ' . checkIfActivePage('reviews') . '" href="reviews.php">Recenzije</a>
             </li>');
-          
-            # Ako je korisnik administrator, prikazi link na korisnike
-            if(checkAccess(1)) {
-              echo('
-              <li class="nav-item">
-                <a class="nav-link" href="users.php">Korisnici</a>
-              </li>');
-            }
+          }
+          // Ako je korisnik administrator, prikazi link na korisnike
+          if(checkAccess(1)) {
+            echo('
+            <li class="nav-item">
+              <a class="nav-link '. checkIfActivePage('users') .'" href="users.php">Korisnici</a>
+            </li>');
           }
           ?>
         </ul>
