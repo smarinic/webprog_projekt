@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 // Preusmjeri korisnika na zadanu adresu
 function redirectPage($url) {
 	header('Location: ' . $url);
-	exit;
+	exit();
 }
 
 // Provjera razine pristupa
@@ -31,6 +31,13 @@ function checkIfActivePage($pageName) {
     return 'active';
   }
   else return false;
+}
+
+function clean_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
 }
 
 ?>
