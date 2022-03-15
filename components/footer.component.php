@@ -1,4 +1,4 @@
-	<footer class="footer mt-auto py-3 fg-light bg-dark">
+	<footer class="footer mt-auto py-3 fg-light bg-dark text-center">
 	<div class="container">
 		<span class="text-muted">Copyright © Sven Marinić</span>
 		<a href="https://github.com/smarinic">
@@ -6,9 +6,8 @@
 		</a>
 	</div>
 	</footer>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/feather.min.js"></script>
-<script>
-	feather.replace()
-</script>
-</html>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/feather.min.js"></script>
+	<script>
+		feather.replace()
+	</script>

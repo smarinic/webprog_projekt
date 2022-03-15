@@ -10,21 +10,27 @@ checkAccess($requiredAccessLevel);
 
 // HTML komponente - head i navbar
 require_once('components/head.component.php');
-require_once('components/navbar.component.php');
 ?>
 
 <body class="d-flex flex-column h-100">
+  <?php
+  include('components/navbar.component.php');
+  ?>
   <main class="flex-shrink-0">
     <div class="container py-5 h-100">
       <!-- PAGE CONTENT  -->
-
-
+      <div class="row">
+        <div class="col col-md-2"></div>
+        <div class="col col-md-8">
+          <!-- ROW CENTRAL COLUMN  -->
+        </div>
+        <div class="col col-md-2"></div>
+      </div>
       <!-- END PAGE CONTENT  -->
     </div>
   </main>
+  <?php
+  include('components/footer.component.php');
+  ?>
 </body>
-
-<?php
-// Ucitaj footer
-include('components/footer.component.php');
-?>
+</html>
