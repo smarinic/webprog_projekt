@@ -44,7 +44,7 @@ if (!isset($is_auth)) {
         } else {
           echo ('
             <ul class="navbar-nav ms-auto">
-              <li class="nav-item"><a class="nav-link" href="profile.php"><i data-feather="user"></i> Profil</a></li>
+              <li class="nav-item"><a class="nav-link" href="profile.php"><i data-feather="user"></i> ' . $_SESSION['first_name'] . ' ' . $_SESSION['last_name'] . '</a></li>
               <li class="nav-item"><a class="nav-link" href="logout.php"><i data-feather="log-out"></i> Odjava</a></li>
             </ul>');
         }
