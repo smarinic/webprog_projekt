@@ -1,4 +1,7 @@
 <?php
+
+require_once('globals.php');
+
 session_start();
 session_destroy();
 // Nakon odjave preusmjeri na pocetnu
