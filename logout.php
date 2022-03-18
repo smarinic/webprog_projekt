@@ -3,6 +3,7 @@ session_start();
 session_destroy();
 // Nakon odjave preusmjeri na pocetnu
 session_start();
-$_SESSION['redirect_message'] = 'Uspješno ste odjavljeni iz aplikacije.';
+require_once(APP_ROOT . '/php/alert.message.handler.php');
+createAlertMessage('success', 'Uspješno ste odjavljeni iz aplikacije.');
 header('Location: index.php');
 ?>
