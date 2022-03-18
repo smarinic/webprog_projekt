@@ -1,20 +1,18 @@
 <?php
 
-// Ucitaj helper funkcije
-require_once(APP_ROOT . 'php/session.php');
-require_once(APP_ROOT . 'php/functions.php');
+require_once('globals.php');
 
 // Provjeri pristup: (Admin = 1, Editor = 2, User = 3, Neregistrirani >3)
 $requiredAccessLevel = 1;
 checkAccess($requiredAccessLevel);
 
 // HTML komponente - head i navbar
-require_once(APP_ROOT . 'components/head.component.php');
+require_once(APP_ROOT . '/components/head.component.php');
 ?>
 
 <body class="d-flex flex-column h-100">
   <?php
-  include(APP_ROOT . 'components/navbar.component.php');
+  include(APP_ROOT . '/components/navbar.component.php');
   ?>
   <main class="flex-shrink-0">
     <div class="container py-5 h-100">
@@ -37,7 +35,7 @@ require_once(APP_ROOT . 'components/head.component.php');
         </thead>
         <tbody>
           <?php
-            require_once(APP_ROOT . 'php/users.controller.php');
+            require_once(APP_ROOT . '/php/users.controller.php');
             $users = getUsers();
             foreach($users as $user) {
               $checkboxStatus = '';
@@ -66,7 +64,7 @@ require_once(APP_ROOT . 'components/head.component.php');
     </div>
   </main>
   <?php
-  include(APP_ROOT . 'components/footer.component.php');
+  include(APP_ROOT . '/components/footer.component.php');
   ?>
 </body>
 </html>

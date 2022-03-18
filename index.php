@@ -1,18 +1,14 @@
 <?php
 
-define('APP_ROOT', $_SERVER['DOCUMENT_ROOT'] . '/filmoteka/');
-
-// Ucitaj session i helper funkcije
-require_once(APP_ROOT . 'php/session.php');
-require_once(APP_ROOT . 'php/functions.php');
+require_once('globals.php');
 
 // HTML komponenta - head
-require_once(APP_ROOT . 'components/head.component.php');
+require_once(APP_ROOT . '/components/head.component.php');
 ?>
 
 <body class="d-flex flex-column h-100">
   <?php
-  require_once(APP_ROOT . 'components/navbar.component.php');
+  require_once(APP_ROOT . '/components/navbar.component.php');
   ?>
   <main class="flex-shrink-0">
     <div class="container">
@@ -21,7 +17,7 @@ require_once(APP_ROOT . 'components/head.component.php');
         <div class="col col-md-2"></div>
         <div class="col col-md-8">
           <?php
-          require_once(APP_ROOT . 'php/alert.message.handler.php');
+          require_once(APP_ROOT . '/php/alert.message.handler.php');
           echo(showAlertMessage());
           clearAlertMessage();
           ?>
@@ -40,7 +36,7 @@ require_once(APP_ROOT . 'components/head.component.php');
     </div>
   </main>
   <?php
-  include(APP_ROOT . 'components/footer.component.php');
+  include(APP_ROOT . '/components/footer.component.php');
   ?>
 </body>
 </html>

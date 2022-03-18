@@ -1,8 +1,8 @@
 <?php
 
 # SQL konekcija
-require_once(APP_ROOT . 'dbconnection.php');
-require_once(APP_ROOT . 'alert.message.handler.php');
+require_once(APP_ROOT . '/php/dbconnection.php');
+require_once(APP_ROOT . '/php/alert.message.handler.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (!isset($_POST['email'], $_POST['password'])) {
@@ -12,13 +12,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   $conn = createConnection();
 
-  if ($statement = $conn->prepare('SELECT users.id, users.first_name, roles.id AS role, users.password, users.is_enabled FROM users, roles WHERE email = ? AND users.role_id = roles.id')) {
+  if ($statement = $conn->prepare('SELECT users.id, users.first_name, users.last_name, users.email, roles.id AS role, users.password, users.is_enabled FROM users, roles WHERE email = ? AND users.role_id = roles.id')) {
     $statement->bind_param('s', $_POST['email']);
     $statement->execute();
     $statement->store_result();
   
     if ($statement->num_rows > 0) {
-      $statement->bind_result($id, $firstName, $role, $password, $is_enabled);
+      $statement->bind_result($id, $firstName, $lastName, $email, $role, $password, $is_enabled);
       $statement->fetch();
   
       if (password_verify($_POST['password'], $password)) {
@@ -29,6 +29,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         session_regenerate_id();
         $_SESSION['is_auth'] = TRUE;
         $_SESSION['first_name'] = $firstName;
+        $_SESSION['last_name'] = $lastName;
+        $_SESSION['email'] = $email;
         $_SESSION['user_id'] = $id;
         $_SESSION['user_role'] = $role;
         createAlertMessage('success', 'Uspješna prijava! Dobrodošli u aplikaciju, ' . $firstName . '.');
