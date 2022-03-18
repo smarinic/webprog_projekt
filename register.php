@@ -1,21 +1,60 @@
 <?php
 
-// Ucitaj helper funkcije
-require_once(APP_ROOT . 'php/session.php');
-require_once(APP_ROOT . 'php/functions.php');
+require_once('globals.php');
+require_once(APP_ROOT . '/php/alert.message.handler.php');
+require_once(APP_ROOT . '/php/users.controller.php');
 
 // Provjeri pristup: (Admin = 1, Editor = 2, User = 3, Neregistrirani >3)
 if ($_SESSION['is_auth'] == true) {
-  redirectPage(APP_ROOT . 'index.php');
+  redirectPage(APP_ROOT . '/index.php');
 }
 
 // HTML komponente - head i navbar
-require_once(APP_ROOT . 'components/head.component.php');
+require_once(APP_ROOT . '/components/head.component.php');
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if (!isset($_POST['email'], $_POST['password'], $_POST['password_confirm'], $_POST['first_name'], $_POST['last_name'])) {
+    createAlertMessage('fail', 'Neki podaci nisu poslani u formi za registraciju.');
+    redirectPage('index.php');
+  } else {
+    if ($_POST['password'] != $_POST['password_confirm']) {
+      createAlertMessage('fail', 'Unosi lozinke nisu isti!');
+      redirectPage('register.php');
+    }
+    if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+      createAlertMessage('fail', 'E-mail adresa nije ispravna!');
+      redirectPage('register.php');
+    }
+    if (!preg_match("/^[a-zA-Z-' ]*$/", $_POST['first_name'])) {
+      createAlertMessage('fail', 'U imenu smiju biti samo slova i razmak!');
+      redirectPage('register.php');
+    }
+    if (!preg_match("/^[a-zA-Z-' ]*$/", $_POST['last_name'])) {
+      createAlertMessage('fail', 'U prezimenu smiju biti samo slova i razmak!');
+      redirectPage('register.php');
+    }
+
+
+    $firstName = clean_input($_POST["first_name"]);
+    $lastName = clean_input($_POST["last_name"]);
+    $email = clean_input($_POST["email"]);
+    $isSuccess = createUser($firstName, $lastName, $email, $_POST['password']);
+
+    if ($isSuccess) {
+      createAlertMessage('success', 'Uspješna registracija! Možete se prijaviti u aplikaciju.');
+      redirectPage('login.php');
+    } else {
+      createAlertMessage('fail', 'Registracija nije uspjela!');
+      redirectPage('register.php');
+    }
+  }
+}
+
 ?>
 
 <body class="d-flex flex-column h-100">
   <?php
-  include(APP_ROOT . 'components/navbar.component.php');
+  include(APP_ROOT . '/components/navbar.component.php');
   ?>
   <main class="flex-shrink-0">
     <div class="container py-5 h-100">
@@ -24,49 +63,15 @@ require_once(APP_ROOT . 'components/head.component.php');
         <div class="col col-md-3"></div>
         <div class="col col-md-6">
           <!-- ROW CENTRAL COLUMN  -->
-          <div class="card" style="border-radius: 15px;">
-            <div class="card-body p-5">
-              <h2 class="text-uppercase text-center mb-5">Registracija korisnika</h2>
-              <form action="php/registration.handler.php" method="post">
-                <div class="form-outline mb-4">
-                  <label class="form-label" for="firstNameInput">Ime</label>
-                  <input type="text" id="firstNameInput" name="first_name" class="form-control form-control-lg" required>
-                </div>
-
-                <div class="form-outline mb-4">
-                  <label class="form-label" for="lastNameInput">Prezime</label>
-                  <input type="text" id="lastNameInput" name="last_name" class="form-control form-control-lg" required>
-                </div>
-
-                <div class="form-outline mb-4">
-                  <label class="form-label" for="form3Example3cg">Email</label>
-                  <input type="email" id="emailInput" name="email" class="form-control form-control-lg" required>
-                </div>
-
-                <div class="form-outline mb-4">
-                  <label class="form-label" for="form3Example4cg">Lozinka</label>
-                  <input type="password" id="passwordInput" name="password" class="form-control form-control-lg" required>
-                </div>
-
-                <div class="form-outline mb-4">
-                  <label class="form-label" for="form3Example4cg">Ponovi lozinku</label>
-                  <input type="password" id="passwordConfirmInput" name="password_confirm" class="form-control form-control-lg" required>
-                </div>
-
-                <div class="d-flex justify-content-center">
-                  <button type="submit" class="btn btn-success btn-block btn-lg">Registriraj se</button>
-                </div>
-              </form>
-            </div>
-          </div>
+          <?php
+          require(APP_ROOT . '/components/registration.form.component.php');
+          ?>
+          <!-- END PAGE CONTENT  -->
         </div>
-        <div class="col col-md-3"></div>
-      </div>
-      <!-- END PAGE CONTENT  -->
-    </div>
   </main>
   <?php
-  include(APP_ROOT . 'components/footer.component.php');
+  include(APP_ROOT . '/components/footer.component.php');
   ?>
 </body>
+
 </html>
