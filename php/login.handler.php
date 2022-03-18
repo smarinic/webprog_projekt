@@ -1,8 +1,8 @@
 <?php
 
 # SQL konekcija
-include('dbconnection.php');
-include('alert.message.handler.php');
+require_once(APP_ROOT . 'dbconnection.php');
+require_once(APP_ROOT . 'alert.message.handler.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (!isset($_POST['email'], $_POST['password'])) {
