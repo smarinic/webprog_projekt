@@ -2,7 +2,7 @@
 	<div class="container">
 		<span class="text-muted">Copyright © Sven Marinić</span>
 		<a href="https://github.com/smarinic">
-			<img src="img/github_logo.png" alt="GitHub Logo" width="16px" height="16px"><!-- TODO: centrirat footer -->
+			<img src="img/github_logo.png" alt="GitHub Logo" width="16px" height="16px">
 		</a>
 	</div>
 	</footer>
