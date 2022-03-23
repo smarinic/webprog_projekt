@@ -1,6 +1,5 @@
 <?php
 
-use JetBrains\PhpStorm\Language;
 
 require_once(APP_ROOT . '/php/dbconnection.php');
 
