@@ -50,20 +50,19 @@ require_once(APP_ROOT . '/components/head.component.php');
                       <tbody>');
             foreach ($data as $review) {
               echo ('
-              <tr>
-                <td>' . $review['title'] . '</td>
-                <td>' . $review['author'] . '</td>
-                <td>' . $review['rating'] . '</td>
-                <td><a href="https://www.themoviedb.org/movie/' . $review['tmdb_id'] . '">TMDb</a></td>
-                <td><a class="btn btn-primary" href="review.php?id=' . $review['id'] . '">Prikaži</a></td>
-                <td><a class="btn btn-danger" href="#">Obriši</a></td>
-              </tr>');
+                        <tr>
+                          <td>' . $review['title'] . '</td>
+                          <td>' . $review['author'] . '</td>
+                          <td>' . $review['rating'] . '</td>
+                          <td><a href="https://www.themoviedb.org/movie/' . $review['tmdb_id'] . '">TMDb</a></td>
+                          <td><a class="btn btn-primary" href="review.php?id=' . $review['id'] . '">Prikaži</a></td>
+                          <td><a class="btn btn-danger" href="#">Obriši</a></td>
+                        </tr>
+                      </tbody>
+                    </table>');
             }
           }
           ?>
-
-          </tbody>
-          </table>
         </div>
         <div class="col col-md-2"></div>
       </div>
