@@ -8,6 +8,7 @@
 	</footer>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/feather.min.js"></script>
+	<script src="js/custom.js"></script>
 	<script>
 		feather.replace()
 	</script>

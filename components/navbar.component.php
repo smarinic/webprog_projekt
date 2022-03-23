@@ -32,6 +32,12 @@ if (!isset($is_auth)) {
               <a class="nav-link ' . checkIfActivePage('users') . '" href="users.php">Korisnici</a>
             </li>');
           }
+          if (checkAccess(3)) {
+            echo ('
+            <li class="nav-item">
+              <a class="nav-link ' . checkIfActivePage('search') . '" href="search.php">Nova recenzija</a>
+            </li>');
+          }
           ?>
         </ul>
         <?php
