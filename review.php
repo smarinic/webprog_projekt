@@ -24,27 +24,38 @@ require_once(APP_ROOT . '/components/head.component.php');
           <?php
           require_once(APP_ROOT . '/php/reviews.controller.php');
 
-          $data = getReview($_GET['id']);
-          if(empty($data)) {
+          $data = getReview($_GET['id'], $_SESSION['user_id']);
+          if (empty($data)) {
             createAlertMessage('fail', 'Recenzija sa tom oznakom ne postoji.');
             redirectPage('index.php');
-          }
-          else {
-            echo('
-          <div><h2>' . $data['title'] . '</h2></div>
-          <div class="border-bottom"><p>Autor: ' . $data['author'] . '</p></div>
-          <div>
-            <p>' . $data['comment'] . '</p>
-          </div>
-          <div>
-            <p>Ocjena: ' . $data['rating'] . '</p>
-            <p>TMDb: <a href="https://www.themoviedb.org/movie/' . $data['tmdb_id'] . '">Informacije o filmu</a></p>
-          </div>
+          } else {
+            echo ('
+            <div class="card mb-3">
+              <div class="row">
+                <div class="col-md-4">
+                  <img src="https://image.tmdb.org/t/p/w300' . $data['poster_path'] .'" class="img-fluid rounded-start" alt="movie poster">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">'. $data['title'] .'</h5>
+                    <p class="card-text"><small class="text-muted">Datum izdanja: '. $data['release_date'] .'</small></p>
+                    <p class="card-text"><small class="text-muted">Ocjena gledatelja: '. $data['rating_average'] .'</small></p>
+                    <hr>
+                    <p class="card-text">'. $data['overview'] .'</p>
+                  </div>
+                </div>
+              </div>
+              <div class="row ms-2">
+                <div class="col-md-12">
+                  <h2 class="text-center">Recenzija</h2>
+                  <p>'. $data['comment'] .'</p>
+                  <p><strong>Ocjena: '. $data['rating'] .'</strong></p>
+                </div>
+              </div>
+            </div>
             ');
           }
           ?>
-
-
         </div>
         <div class="col col-md-2"></div>
       </div>
@@ -55,4 +66,5 @@ require_once(APP_ROOT . '/components/head.component.php');
   include(APP_ROOT . '/components/footer.component.php');
   ?>
 </body>
+
 </html>
