@@ -15,7 +15,9 @@ function getReview($id, $userId) {
   $stmt->execute();
   $result = $stmt->get_result();
   $review = $result->fetch_assoc();
+
   $conn->close();
+  
   return $review;
 }
 
@@ -31,7 +33,7 @@ function getReviews($userId)
 {
   $conn = createConnection();
 
-  $sql = "SELECT reviews.id, reviews.comment, reviews.rating, CONCAT(users.first_name, ' ', users.last_name) AS author, movies.title";
+  $sql = "SELECT reviews.id, reviews.comment, reviews.rating, CONCAT(users.first_name, ' ', users.last_name) AS author, movies.title, movies.tmdb_id";
   $sql .= " FROM reviews, users, movies";
   $sql .= " WHERE users.id = ?";
   $sql .= " AND reviews.user_id = users.id";
@@ -50,6 +52,11 @@ function getReviews($userId)
   return $data;
 }
 
+/**
+ * Get all reviews in database. For admin use only.
+ * 
+ * @return array Returns array with SQL data with all reviews.
+ */
 function getAllReviews()
 {
   $conn = createConnection();
@@ -68,6 +75,16 @@ function getAllReviews()
   return $data;
 }
 
+/**
+ * Insert review data into SQL database.
+ *
+ * @param string $comment Review comment to insert into DB.
+ * @param integer $rating Movie rating to insert into DB.
+ * @param integer $user_id ID of user writing the review.
+ * @param integer $movie_id ID of movie.
+ * 
+ * @return bool Returns true on success, and false on fail.
+ */
 function insertReview($comment, $rating, $user_id, $movie_id)
 {
   $conn = createConnection();
@@ -77,9 +94,19 @@ function insertReview($comment, $rating, $user_id, $movie_id)
   $stmt= $conn->prepare($sql);
   $stmt->bind_param("siii", $comment, $rating, $user_id, $movie_id);
   $stmt->execute();
+
+  $conn->close();
 }
 
 function deleteReview($id)
 {
-  // TODO: dovrsit
+  $conn = createConnection();
+
+  $sql = "DELETE FROM reviews WHERE id=?";
+
+  $stmt= $conn->prepare($sql);
+  $stmt->bind_param("i", $id);
+  $stmt->execute();
+
+  $conn->close();
 }

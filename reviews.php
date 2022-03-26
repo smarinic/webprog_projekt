@@ -8,6 +8,16 @@ checkAccess($requiredAccessLevel);
 
 // HTML komponente - head i navbar
 require_once(APP_ROOT . '/components/head.component.php');
+
+// include
+require_once(APP_ROOT . '/php/reviews.controller.php');
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  deleteReview($_POST['review_id']);
+  createAlertMessage('success', 'Recenzija obrisana!');
+  redirectPage('reviews.php');
+}
 ?>
 
 <body class="d-flex flex-column h-100">
@@ -22,7 +32,6 @@ require_once(APP_ROOT . '/components/head.component.php');
         <div class="col col-md-8">
           <!-- ROW CENTRAL COLUMN  -->
           <?php
-          include(APP_ROOT . '/php/reviews.controller.php');
           $data = [];
           if ($_SESSION['user_role'] <= 2) {
             // prikazi sve
@@ -56,13 +65,14 @@ require_once(APP_ROOT . '/components/head.component.php');
                           <td>' . $review['rating'] . '</td>
                           <td><a href="https://www.themoviedb.org/movie/' . $review['tmdb_id'] . '">TMDb</a></td>
                           <td><a class="btn btn-primary" href="review.php?id=' . $review['id'] . '">Prikaži</a></td>
-                          <td><a class="btn btn-danger" href="#">Obriši</a></td>
+                          <td><form class="form-inline" action="reviews.php" method="post"><input type="hidden" name="review_id" value="' . $review['id'] . '"><button class="btn btn-danger" type="submit">Obriši</button></form></td>
                         </tr>
                       </tbody>
                     </table>');
             }
           }
           ?>
+
         </div>
         <div class="col col-md-2"></div>
       </div>
