@@ -32,6 +32,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="col col-md-8">
           <!-- ROW CENTRAL COLUMN  -->
           <?php
+          require_once(APP_ROOT . '/php/alert.message.handler.php');
+          echo(showAlertMessage());
+          clearAlertMessage();
           $data = [];
           if ($_SESSION['user_role'] <= 2) {
             // prikazi sve
