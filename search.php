@@ -28,17 +28,10 @@ require_once(APP_ROOT . '/components/head.component.php');
           </div>
           <?php
           if (isset($_GET['search_title']) && $_GET['search_title'] != '') {
-            $api_key = file_get_contents(APP_ROOT . '/api_key');
-            $api_query = 'https://api.themoviedb.org/3/search/movie?api_key=';
-            $api_query .= $api_key;
-            $api_query .= '&language=en-US&query=' . urlencode($_GET['search_title']);
-            $api_query .= '&page=1&include_adult=false';
-            $json = file_get_contents($api_query);
-            //$json = file_get_contents('example_search.json'); // za lokalni test JSON
+            
+            require_once(APP_ROOT . '/php/json.controller.php');
+            $results = getJsonSearchMovie($_GET['search_title']);
 
-            $json_data = json_decode($json, true);
-
-            $results = $json_data['results'];
             echo ('
               <table class="table table-bordered">
               <thead>
