@@ -23,8 +23,13 @@ require_once(APP_ROOT . '/components/head.component.php');
           <!-- ROW CENTRAL COLUMN  -->
           <?php
           require_once(APP_ROOT . '/php/reviews.controller.php');
-
-          $data = getReview($_GET['id'], $_SESSION['user_id']);
+          $data = null;
+          if(checkAccess(2)) {
+            $data = getReviewFromAnyUser($_GET['id']);
+          }
+          else {
+            $data = getReview($_GET['id'], $_SESSION['user_id']);
+          }
           if (empty($data)) {
             createAlertMessage('fail', 'Recenzija sa tom oznakom ne postoji.');
             redirectPage('index.php');

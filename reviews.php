@@ -70,9 +70,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                           <td><a class="btn btn-primary" href="review.php?id=' . $review['id'] . '">Prikaži</a></td>
                           <td><form class="form-inline" action="reviews.php" method="post"><input type="hidden" name="review_id" value="' . $review['id'] . '"><button class="btn btn-danger" type="submit">Obriši</button></form></td>
                         </tr>
-                      </tbody>
-                    </table>');
+                      ');
             }
+            echo('</tbody>
+            </table>');
           }
           ?>
 

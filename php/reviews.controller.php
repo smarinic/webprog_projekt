@@ -21,6 +21,24 @@ function getReview($id, $userId) {
   return $review;
 }
 
+function getReviewFromAnyUser($id) {
+  $conn = createConnection();
+
+  $sql = "SELECT reviews.id, movies.tmdb_id, movies.title, movies.overview, movies.release_date, movies.rating_average, movies.poster_path, reviews.comment, reviews.rating, reviews.user_id FROM reviews, movies ";
+  $sql .= "WHERE reviews.id = ?";
+  $sql .= " AND reviews.movie_id = movies.id";
+
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("i", $id);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $review = $result->fetch_assoc();
+
+  $conn->close();
+  
+  return $review;
+}
+
 
 /**
  * Get all reviews created by specified user.
@@ -61,8 +79,9 @@ function getAllReviews()
 {
   $conn = createConnection();
 
-  $sql = "SELECT reviews.id, movies.tmdb_id, reviews.title, reviews.rating, CONCAT(users.first_name, ' ', users.last_name) AS author FROM reviews, users ";
-  $sql .= "WHERE reviews.user_id = users.id";
+  $sql = "SELECT reviews.id, movies.tmdb_id, movies.title, reviews.rating, CONCAT(users.first_name, ' ', users.last_name) AS author";
+  $sql .= " FROM reviews, users, movies";
+  $sql .= " WHERE reviews.user_id = users.id";
   $sql .= " AND reviews.movie_id = movies.id";
 
   $result = $conn->query($sql);
