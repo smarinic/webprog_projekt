@@ -2,6 +2,14 @@
 
 require_once(APP_ROOT . '/php/dbconnection.php');
 
+/**
+ * Get review that was created by specified user.
+ *
+ * @param integer $id Id for review to get from database.
+ * @param integer $userId Id of user that created the review.
+ * 
+ * @return array Returns array with SQL data with all reviews.
+ */
 function getReview($id, $userId) {
   $conn = createConnection();
 
@@ -17,10 +25,20 @@ function getReview($id, $userId) {
   $review = $result->fetch_assoc();
 
   $conn->close();
+
+  $oldDate = $review['release_date'];
+  $review['release_date'] = date("d.m.Y", strtotime($oldDate));
   
   return $review;
 }
 
+/**
+ * Get review from specified user. For admin level accounts only.
+ *
+ * @param integer $id Id for review to get from database.
+ * 
+ * @return array Returns array with SQL data for specified review.
+ */
 function getReviewFromAnyUser($id) {
   $conn = createConnection();
 
@@ -35,6 +53,9 @@ function getReviewFromAnyUser($id) {
   $review = $result->fetch_assoc();
 
   $conn->close();
+
+  $oldDate = $review['release_date'];
+  $review['release_date'] = date("d.m.Y", strtotime($oldDate));
   
   return $review;
 }
@@ -45,7 +66,7 @@ function getReviewFromAnyUser($id) {
  *
  * @param integer $userId User ID from SQL database.
  * 
- * @return array Returns array with SQL data with all reviews.
+ * @return array Returns array with SQL data with all reviews for specified user.
  */
 function getReviews($userId)
 {
@@ -102,7 +123,6 @@ function getAllReviews()
  * @param integer $user_id ID of user writing the review.
  * @param integer $movie_id ID of movie.
  * 
- * @return bool Returns true on success, and false on fail.
  */
 function insertReview($comment, $rating, $user_id, $movie_id)
 {
@@ -117,6 +137,69 @@ function insertReview($comment, $rating, $user_id, $movie_id)
   $conn->close();
 }
 
+
+/**
+ * Update data for any specified review. For admin use only.
+ *
+ * @param integer $id Id of review to update.
+ * @param integer $comment Comment for review.
+ * @param integer $rating Review score for review.
+ * 
+ * @return bool Returns true if update was succesful and false on error.
+ */
+function updateReviewFromAnyUser($id, $comment, $rating)
+{
+  $conn = createConnection();
+
+  $sql = "UPDATE reviews";
+  $sql .= " SET comment = ?, rating = ?";
+  $sql .= " WHERE id = ?";
+
+  $stmt= $conn->prepare($sql);
+  $stmt->bind_param("sii", $comment, $rating, $id);
+  $isUpdateSuccess = $stmt->execute();
+
+  $conn->close();
+
+  return $isUpdateSuccess;
+}
+
+
+/**
+ * Update data for specified review that is created by specified user.
+ *
+ * @param integer $id Id of review to update.
+ * @param integer $userId Id of users that created the review.
+ * @param string $comment Comment for review.
+ * @param integer $rating Review score for review.
+ * 
+ * @return bool Returns true if update was succesful and false on error.
+ * 
+ */
+function updateReview($id, $userId, $comment, $rating)
+{
+  $conn = createConnection();
+
+  $sql = "UPDATE reviews";
+  $sql .= " SET comment = ?, rating = ?";
+  $sql .= " WHERE id = ?";
+  $sql .= " AND user_id = ?";
+
+  $stmt= $conn->prepare($sql);
+  $stmt->bind_param("siii", $comment, $rating, $id, $userId);
+  $isUpdateSuccess = $stmt->execute();
+
+  $conn->close();
+  
+  return $isUpdateSuccess;
+}
+
+/**
+ * Delete review data from SQL database.
+ *
+ * @param integer $id Id of review to delete.
+ * 
+ */
 function deleteReview($id)
 {
   $conn = createConnection();

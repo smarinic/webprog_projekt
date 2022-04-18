@@ -11,42 +11,26 @@ require_once(APP_ROOT . '/php/movies.controller.php');
 require_once(APP_ROOT . '/php/reviews.controller.php');
 require_once(APP_ROOT . '/php/json.controller.php');
 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $movie_id = getMovieId($_SESSION['movie_tmdb_id']);
-  if (is_null($movie_id)) {
-    // film ne postoji, dodaj ga u bazu
-    insertMovie(
-      $_SESSION['movie_tmdb_id'],
-      $_SESSION['movie_title'],
-      $_SESSION['movie_overview'],
-      $_SESSION['movie_release_date'],
-      $_SESSION['movie_rating_average'],
-      $_SESSION['movie_poster_path']
-    );
+  $isUpdateSuccess = false;
+  if($_SESSION['user_role'] <= 2) {
+    // user is admin or editor
+    $isUpdateSuccess = updateReviewFromAnyUser($_SESSION['review_data']['id'], $_POST['review_comment'], $_POST['review_rating']);
   }
-  // film postoji ili je upravo dodan u bazu
-  $movie_id = getMovieId($_SESSION['movie_tmdb_id']);
-  insertReview(
-    $_POST['review_comment'],
-    $_POST['review_rating'],
-    $_SESSION['user_id'],
-    $movie_id
-  );
-  createAlertMessage('success', 'Recenzija je dodana u bazu.');
-  redirectPage('index.php');
+  else {
+    // user is normal user
+    $isUpdateSuccess = updateReview($_SESSION['review_data']['id'], $_SESSION['user_id'], $_POST['review_comment'], $_POST['review_rating']);
+  }
+  if($isUpdateSuccess) {
+    createAlertMessage('success', 'Recenzija je uspješno ažurirana.');
+    redirectPage('reviews.php');
+  }
+  else {
+  createAlertMessage('fail', 'Greška! Recenzija nije uspješno ažurirana.');
+  redirectPage('reviews.php');
+  }
 }
-
-if (!isset($_GET['tmdb_id'], $_GET['movie_title'])) {
-  redirectPage('search.php');
-}
-
-$movie = getJsonMovieDetails($_GET['tmdb_id']);
-$_SESSION['movie_tmdb_id'] = $_GET['tmdb_id'];
-$_SESSION['movie_title'] = $movie['title'];
-$_SESSION['movie_overview'] = $movie['overview'];
-$_SESSION['movie_release_date'] = $movie['release_date'];
-$_SESSION['movie_rating_average'] = $movie['vote_average'];
-$_SESSION['movie_poster_path'] = $movie['poster_path'];
 
 // HTML komponente - head i navbar
 require_once(APP_ROOT . '/components/head.component.php');
@@ -65,36 +49,36 @@ require_once(APP_ROOT . '/components/head.component.php');
           <!-- ROW CENTRAL COLUMN  -->
           <div class="card" style="border-radius: 15px;">
             <div class="card-body p-5">
-              <h2 class="text-center mb-5">Nova recenzija</h2>
-              <form action="create_review.php" method="post">
+              <h2 class="text-center mb-5">Promjena recenzije</h2>
+              <form action="edit_review.php" method="post">
                 <div class="form-outline mb-4">
 
                   <div class="row mb-3">
                     <label class="col-sm-2 col-form-label" for="idInput">TMDb ID:</label>
                     <div class="col-sm-6">
-                      <input type="text" id="idInput" name="movie_tmdb_id" class="form-control" value="<?= $_GET['tmdb_id'] ?>" readonly required>
+                      <input type="text" id="idInput" name="movie_tmdb_id" class="form-control" value="<?= $_SESSION['review_data']['tmdb_id'] ?>" readonly required>
                     </div>
                   </div>
 
                   <div class="row mb-3">
                     <label class="col-sm-2 col-form-label" for="movieInput">Film:</label>
                     <div class="col-sm-6">
-                      <input type="text" id="movieInput" name="movie_title" class="form-control" value="<?= $_GET['movie_title'] ?>" readonly required>
+                      <input type="text" id="movieInput" name="movie_title" class="form-control" value="<?= $_SESSION['review_data']['title'] ?>" readonly required>
                     </div>
                   </div>
 
                   <div class="row mb-3">
                     <label class="col-sm-2 col-form-label" for="commentInput">Recenzija:</label>
                     <div class="col-sm-6">
-                      <textarea id="commentInput" name="review_comment" class="form-control" rows="4" cols="50" required></textarea>
+                      <textarea id="commentInput" name="review_comment" class="form-control" rows="4" cols="50" required><?= $_SESSION['review_data']['comment'] ?></textarea>
                     </div>
                   </div>
 
                   <div class="row mb-3">
                     <label class="col-sm-2 col-form-label" for="ratingInput">Ocjena: </label>
                     <div class="col-sm-6 mt-1">
-                      <span id="ratingDisplay">5</span>
-                      <input type="range" class="form-control-range ms-3" min="0" value="5" max="10" id="ratingInput" name="review_rating" oninput="document.getElementById('ratingDisplay').innerHTML = this.value">
+                      <span id="ratingDisplay"><?= $_SESSION['review_data']['rating'] ?></span>
+                      <input type="range" class="form-control-range ms-3" min="0" value="<?= $_SESSION['review_data']['rating'] ?>" max="10" id="ratingInput" name="review_rating" oninput="document.getElementById('ratingDisplay').innerHTML = this.value">
                     </div>
                   </div>
 

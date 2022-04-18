@@ -43,22 +43,24 @@ require_once(APP_ROOT . '/components/head.component.php');
                 <div class="col-md-8">
                   <div class="card-body">
                     <h5 class="card-title">'. $data['title'] .'</h5>
-                    <p class="card-text"><small class="text-muted">Datum izdanja: '. $data['release_date'] .'</small></p>
+                    <p class="card-text mb-0"><small class="text-muted">Datum izdanja: '. $data['release_date'] .'</small></p>
                     <p class="card-text"><small class="text-muted">Ocjena gledatelja: '. $data['rating_average'] .'</small></p>
                     <hr>
                     <p class="card-text">'. $data['overview'] .'</p>
                   </div>
                 </div>
               </div>
-              <div class="row ms-2">
+              <div class="row ms-2 mb-1">
                 <div class="col-md-12">
                   <h2 class="text-center">Recenzija</h2>
                   <p>'. $data['comment'] .'</p>
-                  <p><strong>Ocjena: '. $data['rating'] .'</strong></p>
+                  <h3 class="text-center"><strong>Ocjena: '. $data['rating'] .'</strong></h3>
+                  <a class="btn btn-warning" href="edit_review.php">Uredi recenziju</a>
                 </div>
               </div>
             </div>
             ');
+            $_SESSION['review_data'] = $data;
           }
           ?>
         </div>
