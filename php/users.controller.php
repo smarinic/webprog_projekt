@@ -45,8 +45,10 @@ function createUser($firstName, $lastName, $email, $password) {
 function deleteUser($id) {
   $conn = createConnection();
 
-  $sql = 'DELETE FROM users WHERE id = ?';
-  $isSuccess = $conn->query($sql) === TRUE;
+  $stmt = $conn->prepare("DELETE FROM users WHERE id = ?");
+  $stmt->bind_param('i', $id);
+
+  $isSuccess = $stmt->execute();
 
   $conn->close();
 

@@ -6,6 +6,15 @@ require_once('globals.php');
 $requiredAccessLevel = 1;
 checkAccess($requiredAccessLevel);
 
+// include
+require_once(APP_ROOT . '/php/users.controller.php');
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  deleteUser($_POST['delete_user_id']);
+  createAlertMessage('success', 'Recenzija obrisana!');
+  redirectPage('users.php');
+}
+
 // HTML komponente - head i navbar
 require_once(APP_ROOT . '/components/head.component.php');
 ?>
@@ -52,8 +61,8 @@ require_once(APP_ROOT . '/components/head.component.php');
                 <td>'.$user['created_at'].'</td>
                 <td>'.$user['updated_at'].'</td>
                 <td><div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" id="user_enabled_checkbox" '.$checkboxStatus.' disabled/></div></td>
-                <td><a class="btn btn-warning" href="#">Uredi</a></td>
-                <td><a class="btn btn-danger" href="#">Obriši</a></td>
+                <td><a class="btn btn-warning" href="edit_user.php?user_id='. $user['id'] .'">Uredi</a></td>
+                <td><form class="form-inline" action="users.php" method="post"><input type="hidden" name="delete_user_id" value="' . $user['id'] . '"><button class="btn btn-danger" type="submit">Obriši</button></form></td>
               </tr>');
             }
           ?>
