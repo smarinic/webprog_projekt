@@ -25,6 +25,10 @@ require_once(APP_ROOT . '/components/head.component.php');
   ?>
   <main class="flex-shrink-0">
     <div class="container py-5 h-100">
+      <?php
+      echo (showAlertMessage());
+      clearAlertMessage();
+      ?>
       <!-- PAGE CONTENT  -->
       <h2>Korisnici</h2>
       <table class="table table-bordered">
@@ -44,29 +48,29 @@ require_once(APP_ROOT . '/components/head.component.php');
         </thead>
         <tbody>
           <?php
-            require_once(APP_ROOT . '/php/users.controller.php');
-            $users = getUsers();
-            foreach($users as $user) {
-              $checkboxStatus = '';
-              if($user['is_enabled']) {
-                $checkboxStatus = 'checked';
-              }
-              echo('
+          require_once(APP_ROOT . '/php/users.controller.php');
+          $users = getUsers();
+          foreach ($users as $user) {
+            $checkboxStatus = '';
+            if ($user['is_enabled']) {
+              $checkboxStatus = 'checked';
+            }
+            echo ('
               <tr>
-                <th scope="row">'.$user['id'].'</th>
-                <td>'.$user['first_name'].'</td>
-                <td>'.$user['last_name'].'</td>
-                <td>'.$user['email'].'</td>
-                <td>'.$user['user_role'].'</td>
-                <td>'.$user['created_at'].'</td>
-                <td>'.$user['updated_at'].'</td>
-                <td><div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" id="user_enabled_checkbox" '.$checkboxStatus.' disabled/></div></td>
-                <td><a class="btn btn-warning" href="edit_user.php?user_id='. $user['id'] .'">Uredi</a></td>
+                <th scope="row">' . $user['id'] . '</th>
+                <td>' . $user['first_name'] . '</td>
+                <td>' . $user['last_name'] . '</td>
+                <td>' . $user['email'] . '</td>
+                <td>' . $user['user_role'] . '</td>
+                <td>' . $user['created_at'] . '</td>
+                <td>' . $user['updated_at'] . '</td>
+                <td><div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" id="user_enabled_checkbox" ' . $checkboxStatus . ' disabled/></div></td>
+                <td><a class="btn btn-warning" href="edit_user.php?user_id=' . $user['id'] . '">Uredi</a></td>
                 <td><form class="form-inline" action="users.php" method="post"><input type="hidden" name="delete_user_id" value="' . $user['id'] . '"><button class="btn btn-danger" type="submit">Obriši</button></form></td>
               </tr>');
-            }
+          }
           ?>
-          
+
         </tbody>
       </table>
       <!-- END PAGE CONTENT  -->
@@ -76,4 +80,5 @@ require_once(APP_ROOT . '/components/head.component.php');
   include(APP_ROOT . '/components/footer.component.php');
   ?>
 </body>
+
 </html>
