@@ -21,6 +21,8 @@ require_once(APP_ROOT . '/components/head.component.php');
         <div class="col col-md-2"></div>
         <div class="col col-md-8">
           <!-- ROW CENTRAL COLUMN  -->
+          <img class="mx-auto d-block" src="img/tmdb_logo.svg" style="max-width: 25%" alt="logo">
+          <br>
           <h2>Pretraga filmova za recenziju</h2>
           <div class="input-group mb-3">
             <input type="text" class="form-control" id="searchInput" placeholder="Naziv filma za pretragu" aria-label="Naziv filma za pretragu" aria-describedby="searchButton">
