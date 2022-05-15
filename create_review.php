@@ -71,35 +71,35 @@ require_once(APP_ROOT . '/components/head.component.php');
 
                   <div class="row mb-3">
                     <label class="col-sm-2 col-form-label" for="idInput">TMDb ID:</label>
-                    <div class="col-sm-6">
+                    <div class="col-sm-10">
                       <input type="text" id="idInput" name="movie_tmdb_id" class="form-control" value="<?= $_GET['tmdb_id'] ?>" readonly required>
                     </div>
                   </div>
 
                   <div class="row mb-3">
                     <label class="col-sm-2 col-form-label" for="movieInput">Film:</label>
-                    <div class="col-sm-6">
+                    <div class="col-sm-10">
                       <input type="text" id="movieInput" name="movie_title" class="form-control" value="<?= $_GET['movie_title'] ?>" readonly required>
                     </div>
                   </div>
 
                   <div class="row mb-3">
                     <label class="col-sm-2 col-form-label" for="commentInput">Recenzija:</label>
-                    <div class="col-sm-6">
+                    <div class="col-sm-10">
                       <textarea id="commentInput" name="review_comment" class="form-control" rows="4" cols="50" required></textarea>
                     </div>
                   </div>
 
                   <div class="row mb-3">
                     <label class="col-sm-2 col-form-label" for="ratingInput">Ocjena: </label>
-                    <div class="col-sm-6 mt-1">
+                    <div class="col-sm-10 mt-1">
                       <span id="ratingDisplay">5</span>
                       <input type="range" class="form-control-range ms-3" min="0" value="5" max="10" id="ratingInput" name="review_rating" oninput="document.getElementById('ratingDisplay').innerHTML = this.value">
                     </div>
                   </div>
 
                   <div class="row">
-                    <div class="col-sm-10">
+                    <div class="col-sm-12 text-center">
                       <button type="submit" class="btn btn-success btn-block">Spremi</button>
                       <a class="btn btn-danger" href="index.php">Odustani</a>
                     </div>
