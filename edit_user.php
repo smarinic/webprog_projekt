@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
       $userStatus = false;
     }
-    if (!updateUserByAdmin($_POST['update_user_id'], $_POST['first_name'], $_POST['last_name'], $_POST['email'], $_POST['password'], $userStatus)) {
+    if (!updateUserByAdmin($_POST['update_user_id'], $_POST['first_name'], $_POST['last_name'], $_POST['email'], $_POST['password'], $userStatus, $_POST['role_select'])) {
       createAlertMessage('fail', 'Podaci nisu uspješno promijenjeni!');
       redirectPage('users.php');
     } else {
@@ -59,7 +59,7 @@ require_once(APP_ROOT . '/components/head.component.php');
 
 <body class="d-flex flex-column h-100">
   <?php
-  include(APP_ROOT . '/components/navbar.component.php');
+  include_once(APP_ROOT . '/components/navbar.component.php');
   ?>
   <main class="flex-shrink-0">
     <div class="container py-5 h-100">
@@ -74,6 +74,7 @@ require_once(APP_ROOT . '/components/head.component.php');
           <!-- ROW CENTRAL COLUMN  -->
           <?php
           $user = getUser($_GET['user_id']);
+          $roles = getUserRoles();
           $checkbox_modifier = '';
           if ($user['is_enabled'] == '1') {
             $checkbox_modifier = 'checked';
@@ -117,6 +118,19 @@ require_once(APP_ROOT . '/components/head.component.php');
                     </label>
                   </div>
                 </div>
+
+                <select name="role_select" class="form-select mb-4" aria-label="Vrsta računa">
+                  <?php
+                  foreach ($roles as $key => $value) {
+                    if($user["role_id"] == $value["id"]) {
+                      echo '<option selected value="' . htmlspecialchars($value["id"]) . '">' . htmlspecialchars($value["name"]) . '</option>';
+                    }
+                    else {
+                      echo '<option value="' . htmlspecialchars($value["id"]) . '">' . htmlspecialchars($value["name"]) . '</option>';
+                    }
+                  }
+                  ?>
+                </select>
 
                 <div class="d-flex justify-content-center">
                   <button type="submit" class="btn btn-success btn-block btn-lg">Spremi promjene</button>

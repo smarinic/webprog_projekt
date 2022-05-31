@@ -40,6 +40,11 @@ require_once(APP_ROOT . '/components/head.component.php');
                 <td>Administrator</td>
               </tr>
               <tr>
+                <td>pero@filmoteka.local</td>
+                <td>pero123</td>
+                <td>Urednik</td>
+              </tr>
+              <tr>
                 <td>ckent@dailyplanet.com</td>
                 <td>clark123</td>
                 <td>Korisnik</td>

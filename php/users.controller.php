@@ -21,7 +21,7 @@ function getUsers() {
 function getUser($id) {
   $conn = createConnection();
 
-  $sql = "SELECT users.first_name, users.last_name, users.email, users.created_at, users.updated_at, users.is_enabled FROM users, roles WHERE users.id=? AND users.role_id = roles.id";
+  $sql = "SELECT users.first_name, users.last_name, users.email, users.created_at, users.updated_at, users.is_enabled, users.role_id FROM users, roles WHERE users.id=? AND users.role_id = roles.id";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("i", $id);
   $stmt->execute();
@@ -97,10 +97,10 @@ function updateUser($id, $firstName, $lastName, $email, $password) {
  * @return bool Returns true if update was succesful and false on error.
  * 
  */
-function updateUserByAdmin($id, $firstName, $lastName, $email, $password, $isEnabled) {
+function updateUserByAdmin($id, $firstName, $lastName, $email, $password, $isEnabled, $roleId) {
   $conn = createConnection();
 
-  $stmt = $conn->prepare("UPDATE users SET first_name = ?, last_name = ?, email = ?, password = ?, updated_at = ?, is_enabled = ? WHERE id = ?");
+  $stmt = $conn->prepare("UPDATE users SET first_name = ?, last_name = ?, email = ?, password = ?, updated_at = ?, is_enabled = ?, role_id = ? WHERE id = ?");
   $update_datetime = date('Y-m-d H:i:s'); // insert current datetime for updated_at column
   $accountStatus = 0;
   switch ($isEnabled) {
@@ -109,11 +109,12 @@ function updateUserByAdmin($id, $firstName, $lastName, $email, $password, $isEna
       break;
     case false:
       $accountStatus = 0;
+      break;
     default:
       $accountStatus = 0;
       break;
   }
-  $stmt->bind_param('sssssii', $firstName, $lastName, $email, $password, $update_datetime, $accountStatus, $id);
+  $stmt->bind_param('sssssiii', $firstName, $lastName, $email, $password, $update_datetime, $accountStatus, $roleId, $id);
 
   $password = password_hash(clean_input($_POST["password"]), PASSWORD_DEFAULT);
 
@@ -121,4 +122,19 @@ function updateUserByAdmin($id, $firstName, $lastName, $email, $password, $isEna
   $conn->close();
 
   return $isSuccess;
+}
+
+function getUserRoles() {
+  $conn = createConnection();
+
+  $sql = "SELECT id, name FROM roles";
+  $result = $conn->query($sql);
+ 
+  $data = [];
+  while ($row = $result->fetch_assoc()) {
+      $data[] = $row;
+  }
+  $conn->close();
+
+  return $data;
 }
