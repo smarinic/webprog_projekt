@@ -4,7 +4,7 @@ define('APP_ROOT', __DIR__);
 
 // true za koristenje fiksnih JSON-a u /test_data
 // za koristenje API-ja prebaci na false
-define('USE_FAKE_JSON_DATA', true);
+define('USE_FAKE_JSON_DATA', false);
 
 require_once(APP_ROOT . '/php/session.php');
 require_once(APP_ROOT . '/php/functions.php');
