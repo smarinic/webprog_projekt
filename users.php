@@ -66,7 +66,7 @@ require_once(APP_ROOT . '/components/head.component.php');
                 <td>' . $user['updated_at'] . '</td>
                 <td><div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" id="user_enabled_checkbox" ' . $checkboxStatus . ' disabled/></div></td>
                 <td><a class="btn btn-warning" href="edit_user.php?user_id=' . $user['id'] . '">Uredi</a></td>
-                <td><form class="form-inline" action="users.php" method="post"><input type="hidden" name="delete_user_id" value="' . $user['id'] . '"><button class="btn btn-danger" type="submit">Obriši</button></form></td>
+                <td><form class="form-inline" action="users.php" method="post" onsubmit="return confirm(\'Jeste li sigurni da želite obrisati ovog korisnika?\');"><input type="hidden" name="delete_user_id" value="' . $user['id'] . '"><button class="btn btn-danger" type="submit">Obriši</button></form></td>
               </tr>');
           }
           ?>

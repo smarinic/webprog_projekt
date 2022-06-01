@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                           <td>' . $review['rating'] . '</td>
                           <td><a href="https://www.themoviedb.org/movie/' . $review['tmdb_id'] . '">TMDb</a></td>
                           <td><a class="btn btn-primary" href="review.php?id=' . $review['id'] . '">Prikaži</a></td>
-                          <td><form class="form-inline" action="reviews.php" method="post"><input type="hidden" name="review_id" value="' . $review['id'] . '"><button class="btn btn-danger" type="submit">Obriši</button></form></td>
+                          <td><form class="form-inline" action="reviews.php" method="post" onsubmit="return confirm(\'Jeste li sigurni da želite obrisati ovog korisnika?\');"><input type="hidden" name="review_id" value="' . $review['id'] . '"><button class="btn btn-danger" type="submit">Obriši</button></form></td>
                         </tr>
                       ');
             }
