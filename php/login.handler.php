@@ -1,12 +1,11 @@
 <?php
 
-# SQL konekcija
 require_once(APP_ROOT . '/php/dbconnection.php');
 require_once(APP_ROOT . '/php/alert.message.handler.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (!isset($_POST['email'], $_POST['password'])) {
-    // Podaci sa forme za prijavu nisu poslani.
+    // Login form data was not sent correctly.
     exit('Podaci nisu poslani sa login forme u POST zahtjevu.');
   }
 

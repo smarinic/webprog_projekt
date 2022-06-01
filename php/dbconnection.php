@@ -1,11 +1,16 @@
 <?php
 if ( mysqli_connect_errno() ) {
-	// Izbaci gresku ako postoji
+	// Throw error if SQL connection already exists
 	exit('SQL greška: ' . mysqli_connect_error());
 }
 
+/**
+ * Creates database connection from defined constants.
+ * 
+ * @return mysqli|null|false Returns connection object or false if there was an error.
+ */ 
 function createConnection() {
-	# DB login info
+	// DB login info
 	if(!defined('DB_HOST')) {
 		define('DB_HOST', 'localhost');
 	}

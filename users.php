@@ -2,7 +2,7 @@
 
 require_once('globals.php');
 
-// Provjeri pristup: (Admin = 1, Editor = 2, User = 3, Neregistrirani >3)
+// Check user access (Admin = 1, Editor = 2, User = 3, Unregistered >3)
 $requiredAccessLevel = 1;
 checkAccess($requiredAccessLevel);
 
@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   redirectPage('users.php');
 }
 
-// HTML komponente - head i navbar
+// Navbar component
 require_once(APP_ROOT . '/components/head.component.php');
 ?>
 
@@ -70,7 +70,6 @@ require_once(APP_ROOT . '/components/head.component.php');
               </tr>');
           }
           ?>
-
         </tbody>
       </table>
       <!-- END PAGE CONTENT  -->

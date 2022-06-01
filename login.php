@@ -4,12 +4,12 @@ require_once('globals.php');
 require_once(APP_ROOT . '/php/session.php');
 require_once(APP_ROOT . '/php/functions.php');
 
-// Dopusti pristup samo ako korisnik nije prijavljen
+// Show page only if user is not logged in
 if ($_SESSION['is_auth'] == true) {
   redirectPage('index.php');
 }
 
-# HTML komponente
+// Navbar component
 include(APP_ROOT . '/components/head.component.php');
 
 ?>

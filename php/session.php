@@ -1,8 +1,7 @@
 <?php
-// Pokreni sesiju
 session_start();
 
-// Postavi is_auth na FALSE ako nije inicijaliziran
+// Set is_auth to FALSE if not initialized
 if (!isset($_SESSION['is_auth'])) {
   $_SESSION['is_auth'] = false;
 }

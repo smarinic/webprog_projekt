@@ -18,14 +18,14 @@ if (!isset($is_auth)) {
             <a class="nav-link <?php echo (checkIfActivePage("index")) ?>" aria-current="page" href="index.php">Početna</a>
           </li>
           <?php
-          // Ako je korisnik prijavljen, prikazi link na recenzije
+          // If user is logged in, show link to reviews page
           if (checkAccess(3)) {
             echo ('
             <li class="nav-item">
               <a class="nav-link ' . checkIfActivePage('reviews') . '" href="reviews.php">Recenzije</a>
             </li>');
           }
-          // Ako je korisnik administrator, prikazi link na korisnike
+          // If user is admin, show link to users page
           if (checkAccess(1)) {
             echo ('
             <li class="nav-item">

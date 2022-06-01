@@ -2,7 +2,7 @@
 
 require_once('globals.php');
 
-// HTML komponenta - head
+// Navbar component
 require_once(APP_ROOT . '/components/head.component.php');
 ?>
 

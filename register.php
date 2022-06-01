@@ -4,12 +4,12 @@ require_once('globals.php');
 require_once(APP_ROOT . '/php/alert.message.handler.php');
 require_once(APP_ROOT . '/php/users.controller.php');
 
-// Provjeri pristup: (Admin = 1, Editor = 2, User = 3, Neregistrirani >3)
+// Check user access (Admin = 1, Editor = 2, User = 3, Unregistered >3)
 if ($_SESSION['is_auth'] == true) {
   redirectPage(APP_ROOT . '/index.php');
 }
 
-// HTML komponente - head i navbar
+// Navbar component
 require_once(APP_ROOT . '/components/head.component.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

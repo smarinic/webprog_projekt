@@ -3,6 +3,12 @@
 
 require_once(APP_ROOT . '/php/dbconnection.php');
 
+/**
+ * Get data for all users in database.
+ *
+ * @return Array Returns array with users.
+ * 
+ */
 function getUsers() {
 
   $conn = createConnection();
@@ -18,6 +24,14 @@ function getUsers() {
   return $data;
 }
 
+/**
+ * Get data for specified user.
+ *
+ * @param integer $id Id of user to get.
+ * 
+ * @return Array Returns array with user data.
+ * 
+ */
 function getUser($id) {
   $conn = createConnection();
 
@@ -31,6 +45,19 @@ function getUser($id) {
   return $user;
 }
 
+/**
+ * Create user by inserting into the database.
+ * User password is hashed by default PHP hashing algorithm.
+ * For PHP 5.5.0 it's bcrypt.
+ *
+ * @param string $firstName First name for user.
+ * @param string $lastName Last name for user.
+ * @param string $email Email for user.
+ * @param string $password Password for user.
+ * 
+ * @return bool Returns true if insert was succesful and false on error.
+ * 
+ */
 function createUser($firstName, $lastName, $email, $password) {
   $conn = createConnection();
   $stmt = $conn->prepare("INSERT INTO users (first_name, last_name, email, password, role_id) VALUES (?, ?, ?, ?, 3)");
@@ -42,6 +69,14 @@ function createUser($firstName, $lastName, $email, $password) {
   return $isSuccess;
 }
 
+/**
+ * Delete user from the database.
+ *
+ * @param integer $id ID of user to delete.
+ * 
+ * @return bool Returns true if delete was succesful and false on error.
+ * 
+ */
 function deleteUser($id) {
   $conn = createConnection();
 
@@ -124,6 +159,12 @@ function updateUserByAdmin($id, $firstName, $lastName, $email, $password, $isEna
   return $isSuccess;
 }
 
+/**
+ * Get all user roles from database.
+ *
+ * @return Array Returns array with all user roles.
+ * 
+ */
 function getUserRoles() {
   $conn = createConnection();
 

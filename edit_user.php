@@ -2,7 +2,7 @@
 
 require_once('globals.php');
 
-// Provjeri pristup: (Admin = 1, Editor = 2, User = 3, Neregistrirani >3)
+// Check user access (Admin = 1, Editor = 2, User = 3, Unregistered >3)
 $requiredAccessLevel = 4;
 checkAccess($requiredAccessLevel);
 
@@ -10,7 +10,6 @@ checkAccess($requiredAccessLevel);
 require_once(APP_ROOT . '/php/users.controller.php');
 require_once(APP_ROOT . '/php/alert.message.handler.php');
 
-// Requests skripte
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (!isset($_POST['email'], $_POST['password'], $_POST['password_confirm'], $_POST['first_name'], $_POST['last_name'])) {
     createAlertMessage('fail', 'Neki podaci nisu poslani u formi za registraciju.');
@@ -52,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 }
 
-// HTML komponente - head i navbar
+// Navbar component
 require_once(APP_ROOT . '/components/head.component.php');
 
 ?>

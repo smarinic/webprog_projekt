@@ -2,12 +2,9 @@
 
 require_once('globals.php');
 
-// Provjeri pristup: (Admin = 1, Editor = 2, User = 3, Neregistrirani >3)
+// Check user access (Admin = 1, Editor = 2, User = 3, Unregistered >3)
 $requiredAccessLevel = 3;
 checkAccess($requiredAccessLevel);
-
-// HTML komponente - head i navbar
-require_once(APP_ROOT . '/components/head.component.php');
 
 // include
 require_once(APP_ROOT . '/php/reviews.controller.php');
@@ -18,6 +15,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   createAlertMessage('success', 'Recenzija obrisana!');
   redirectPage('reviews.php');
 }
+
+// Navbar component
+require_once(APP_ROOT . '/components/head.component.php');
 ?>
 
 <body class="d-flex flex-column h-100">
