@@ -11,7 +11,7 @@ require_once(APP_ROOT . '/php/users.controller.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   deleteUser($_POST['delete_user_id']);
-  createAlertMessage('success', 'Recenzija obrisana!');
+  createAlertMessage('success', 'Korisnički račun obrisan!');
   redirectPage('users.php');
 }
 

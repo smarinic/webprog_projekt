@@ -43,7 +43,7 @@ require_once(APP_ROOT . '/components/head.component.php');
                 <div class="col-md-8">
                   <div class="card-body">
                     <h5 class="card-title">'. $data['title'] .'</h5>
-                    <p class="card-text mb-0"><small class="text-muted">Datum izdanja: '. $data['release_date'] .'</small></p>
+                    <p class="card-text mb-0"><small class="text-muted">Datum izdanja: '. date("d.m.Y", strtotime($data['release_date'])) .'</small></p>
                     <p class="card-text"><small class="text-muted">Ocjena gledatelja: '. $data['rating_average'] .'</small></p>
                     <hr>
                     <p class="card-text">'. $data['overview'] .'</p>

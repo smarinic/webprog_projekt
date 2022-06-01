@@ -51,7 +51,7 @@ require_once(APP_ROOT . '/components/head.component.php');
                 <tr>
                   <th scope="row">' . $result['title'] . '</th>
                   <td>' . $result['overview'] . '</td>
-                  <td>' . $result['release_date'] . '</td>
+                  <td>' . date("d.m.Y", strtotime($result['release_date'])) . '</td>
                   <td><a class="btn btn-primary" href="create_review.php?tmdb_id=' . $result['id'] . '&movie_title=' . urlencode($result['title']) . '">Ocijeni</a></td>
                   <td><a class="btn btn-link" target="_blank" href="https://www.themoviedb.org/movie/' . $result['id'] . '">Otvori TMDb</a></td>
                 </tr>');

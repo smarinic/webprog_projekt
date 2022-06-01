@@ -25,11 +25,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       createAlertMessage('fail', 'E-mail adresa nije ispravna!');
       redirectPage('register.php');
     }
-    if (!preg_match("/^[a-zA-Z-' ]*$/", $_POST['first_name'])) {
+    if (!preg_match("/^[a-zćčđšžA-ZĆČĐŠŽ\s]*$/", $_POST['first_name'])) {
       createAlertMessage('fail', 'U imenu smiju biti samo slova i razmak!');
       redirectPage('register.php');
     }
-    if (!preg_match("/^[a-zA-Z-' ]*$/", $_POST['last_name'])) {
+    if (!preg_match("/^[a-zćčđšžA-ZĆČĐŠŽ\s]*$/", $_POST['last_name'])) {
       createAlertMessage('fail', 'U prezimenu smiju biti samo slova i razmak!');
       redirectPage('register.php');
     }
@@ -64,6 +64,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="col col-md-6">
           <!-- ROW CENTRAL COLUMN  -->
           <?php
+          echo (showAlertMessage());
+          clearAlertMessage();
           require(APP_ROOT . '/components/registration.form.component.php');
           ?>
           <!-- END PAGE CONTENT  -->

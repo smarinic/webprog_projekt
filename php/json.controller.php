@@ -12,7 +12,7 @@ function getJsonSearchMovie($searchTerm)
 
   $api_query = 'https://api.themoviedb.org/3/search/movie?api_key=';
   $api_query .= $api_key;
-  $api_query .= '&language=en-US&query=' . urlencode($searchTerm);
+  $api_query .= '&language=hr-HR&query=' . urlencode($searchTerm);
   $api_query .= '&page=1&include_adult=false';
 
   if(USE_FAKE_JSON_DATA) {
