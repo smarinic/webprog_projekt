@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 18, 2022 at 04:58 PM
+-- Generation Time: Jun 01, 2022 at 01:11 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -11,18 +11,11 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-CREATE DATABASE filmoteka;
-CREATE USER 'dbuser'@'localhost' IDENTIFIED BY 'user123';
-GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT, REFERENCES, RELOAD on filmoteka.* TO 'dbuser'@'localhost' WITH GRANT OPTION;
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 --
 -- Database: `filmoteka`
 --
+CREATE DATABASE IF NOT EXISTS `filmoteka` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `filmoteka`;
 
 -- --------------------------------------------------------
 
@@ -48,7 +41,9 @@ INSERT INTO `movies` (`id`, `tmdb_id`, `title`, `overview`, `release_date`, `rat
 (11, '24428', 'The Avengers', 'When Tony Stark tries to jumpstart a dormant peacekeeping program, things go awry and Earth’s Mightiest Heroes are put to the ultimate test as the fate of the planet hangs in the balance. As the villainous Ultron emerges, it is up to The Avengers to stop him from enacting his terrible plans, and soon uneasy alliances and unexpected action pave the way for an epic and unique global adventure.', '1999-10-12', '7.8', '/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg'),
 (12, '99861', 'The Avengers', 'When Tony Stark tries to jumpstart a dormant peacekeeping program, things go awry and Earth’s Mightiest Heroes are put to the ultimate test as the fate of the planet hangs in the balance. As the villainous Ultron emerges, it is up to The Avengers to stop him from enacting his terrible plans, and soon uneasy alliances and unexpected action pave the way for an epic and unique global adventure.', '1999-10-12', '7.8', '/t90Y3G8UGQp0f0DrP60wRu9gfrH.jpg'),
 (13, '634649', 'Spider-Man: No Way Home', 'Peter Parker is unmasked and no longer able to separate his normal life from the high-stakes of being a super-hero. When he asks for help from Doctor Strange the stakes become even more dangerous, forcing him to discover what it truly means to be Spider-Man.', '2021-12-15', '8.2', '/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg'),
-(14, '141052', 'Justice League', 'Fuelled by his restored faith in humanity and inspired by Superman\'s selfless act, Bruce Wayne and Diana Prince assemble a team of metahumans consisting of Barry Allen, Arthur Curry and Victor Stone to face the catastrophic threat of Steppenwolf and the Parademons who are on the hunt for three Mother Boxes on Earth.', '2017-11-15', '6.1', '/eifGNCSDuxJeS1loAXil5bIGgvC.jpg');
+(14, '141052', 'Justice League', 'Fuelled by his restored faith in humanity and inspired by Superman\'s selfless act, Bruce Wayne and Diana Prince assemble a team of metahumans consisting of Barry Allen, Arthur Curry and Victor Stone to face the catastrophic threat of Steppenwolf and the Parademons who are on the hunt for three Mother Boxes on Earth.', '2017-11-15', '6.1', '/eifGNCSDuxJeS1loAXil5bIGgvC.jpg'),
+(15, '120', 'The Lord of the Rings: The Fellowship of the Ring', 'Young hobbit Frodo Baggins, after inheriting a mysterious ring from his uncle Bilbo, must leave his home in order to keep it from falling into the hands of its evil creator. Along the way, a fellowship is formed to protect the ringbearer and make sure that the ring arrives at its final destination: Mt. Doom, the only place where it can be destroyed.', '2001-12-18', '8.4', '/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg'),
+(16, '11324', 'Shutter Island', 'World War II soldier-turned-U.S. Marshal Teddy Daniels investigates the disappearance of a patient from a hospital for the criminally insane, but his efforts are compromised by his troubling visions and also by a mysterious doctor.', '2010-02-14', '8.2', '/kve20tXwUZpu4GUX8l6X7Z4jmL6.jpg');
 
 -- --------------------------------------------------------
 
@@ -69,8 +64,7 @@ CREATE TABLE `reviews` (
 --
 
 INSERT INTO `reviews` (`id`, `comment`, `rating`, `user_id`, `movie_id`) VALUES
-(8, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.', 7, 4, 13),
-(9, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.', 4, 6, 14);
+(8, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.', 7, 4, 13);
 
 -- --------------------------------------------------------
 
@@ -116,10 +110,11 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `created_at`, `updated_at`, `is_enabled`, `role_id`) VALUES
 (1, 'Glavni', 'Administrator', 'admin@filmoteka.local', '$2y$10$PVHf32aiBVsXq4QuQ1NOw.g2OJs.mVh7dPmhIq4tdcz3tONsSFBm2', '2022-03-07 11:23:15', NULL, 1, 1),
-(2, 'Pero', 'Perić', 'pero@filmoteka.local', '$2y$10$ZubcyrbRFdCXYJhLIf3RvecR8FNuaiJHbNluiBmL6pDkNRSkT7svi', '2022-03-07 11:23:15', '2022-04-18 16:56:24', 1, 2),
+(2, 'Perica', 'Perić', 'pero@filmoteka.local', '$2y$10$8F/4hngoJ4ZDfy0cB3D//uNLzjUOrxJt.3O3CvjSuykDnSa3BT04W', '2022-03-07 11:23:15', '2022-06-01 10:29:26', 1, 3),
 (4, 'Bruce', 'Wayne', 'bruce@wayne.com', '$2y$10$aOL448j0JaAU6os8XhmtPezizE4oVQzHaM7LtSQeYRjsSMSu1ozxW', '2022-03-15 15:41:10', NULL, 1, 3),
 (6, 'Clark', 'Kent', 'ckent@dailyplanet.com', '$2y$10$fWmZQ4QZudgDEhaEXe.6du2gZuDy3X6FsLmmgWlUBuEEDMgVCbQx2', '2022-03-15 15:45:40', NULL, 1, 3),
-(12, 'Wally', 'West', 'wally@scpd.com', '$2y$10$F1n6kSQBZaQvU/J8.1oq..msjI/aJPtZ3qdZahEwkbTecYr/pBIkS', '2022-03-18 13:53:04', NULL, 1, 3);
+(12, 'Wally', 'West', 'wally@scpd.com', '$2y$10$OvVBluHZUdAv9LTrOLjNbOld88MjVnmMyjnuczRIdIcSI8uSRiNGa', '2022-03-18 13:53:04', '2022-05-31 12:11:52', 1, 3),
+(15, 'Ivan', 'Horvat', 'ivan@gmail.com', '$2y$10$U0B/vfPPfgUOo2SCn51z/e0mLqLJRfg29mM4rwvc3njSQaHQ7A0z2', '2022-06-01 12:21:59', NULL, 1, 3);
 
 --
 -- Indexes for dumped tables
@@ -163,13 +158,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `movies`
 --
 ALTER TABLE `movies`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -181,7 +176,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables
@@ -200,7 +195,3 @@ ALTER TABLE `reviews`
 ALTER TABLE `users`
   ADD CONSTRAINT `fk_role` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
